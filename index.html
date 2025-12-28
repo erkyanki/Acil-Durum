@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acil Durum Bildirim Sistemi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        label .required {
+            color: #f44336;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        select {
+            cursor: pointer;
+            background: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideIn 0.3s ease;
+            text-align: center;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .emergency-icon {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emergency-icon">🚨</div>
+        <h1>Acil Durum Bildirim</h1>
+        <p class="subtitle">Yangın, deprem ve diğer acil durumları hızlıca bildirin</p>
+
+        <div id="alertBox" class="alert"></div>
+
+        <form id="emergencyForm">
+            <div class="form-group">
+                <label for="durumTipi">Durum Tipi <span class="required">*</span></label>
+                <select id="durumTipi" required>
+                    <option value="">Seçiniz...</option>
+                    <option value="Yangın">🔥 Yangın</option>
+                    <option value="Deprem">🌍 Deprem</option>
+                    <option value="Su Baskını">🌊 Su Baskını</option>
+                    <option value="Gaz Kaçağı">⚠️ Gaz Kaçağı</option>
+                    <option value="Elektrik Kesintisi">⚡ Elektrik Kesintisi</option>
+                    <option value="Kaza">🚑 Kaza</option>
+                    <option value="Diğer">🆘 Diğer Acil Durum</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="konum">Konum <span class="required">*</span></label>
+                <input type="text" id="konum" placeholder="Örn: A Blok, 3. Kat, 305 Nolu Oda" required>
+            </div>
+
+            <div class="form-group">
+                <label for="bildirenKisi">Adınız Soyadınız <span class="required">*</span></label>
+                <input type="text" id="bildirenKisi" placeholder="Adınız ve Soyadınız" required>
+            </div>
+
+            <div class="form-group">
+                <label for="telefon">Telefon Numaranız <span class="required">*</span></label>
+                <input type="tel" id="telefon" placeholder="0555 123 45 67" required>
+            </div>
+
+            <div class="form-group">
+                <label for="aciklama">Açıklama <span class="required">*</span></label>
+                <textarea id="aciklama" placeholder="Durumla ilgili detaylı bilgi verin (yangının şiddeti, deprem hasarı vb.)..." required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">🚨 ACİL DURUM BİLDİR</button>
+        </form>
+    </div>
+
+    <script>
+        // ⚠️ ÖNEMLİ: Buraya N8N Webhook URL'nizi yazın
+        const WEBHOOK_URL = 'https://omer35arica.app.n8n.cloud/webhook/836b3333-4c43-48a8-acd6-6862b28a1976';
+
+        const form = document.getElementById('emergencyForm');
+        const alertBox = document.getElementById('alertBox');
+
+        function showAlert(message, type) {
+            alertBox.textContent = message;
+            alertBox.className = `alert ${type}`;
+            alertBox.style.display = 'block';
+            
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 5000);
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Webhook URL kontrolü
+            if (!WEBHOOK_URL || WEBHOOK_URL === 'BURAYA_N8N_WEBHOOK_URLINIZI_YAPIŞTIRIN') {
+                showAlert('❌ Webhook URL tanımlanmamış! Lütfen sistem yöneticisiyle iletişime geçin.', 'error');
+                return;
+            }
+
+            // Form verilerini topla
+            const formData = {
+                durumTipi: document.getElementById('durumTipi').value,
+                konum: document.getElementById('konum').value,
+                bildirenKisi: document.getElementById('bildirenKisi').value,
+                telefon: document.getElementById('telefon').value,
+                aciklama: document.getElementById('aciklama').value,
+                tarih: new Date().toLocaleString('tr-TR'),
+                timestamp: new Date().toISOString()
+            };
+
+            // Submit butonunu devre dışı bırak
+            const submitBtn = form.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Gönderiliyor...';
+
+            try {
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    showAlert('✅ Acil durum bildirimi başarıyla gönderildi! İlgili ekipler bilgilendirildi.', 'success');
+                    form.reset();
+                } else {
+                    throw new Error('Sunucu hatası');
+                }
+            } catch (error) {
+                showAlert('❌ Bildirim gönderilemedi. Lütfen tekrar deneyin veya doğrudan 112\'yi arayın!', 'error');
+                console.error('Hata:', error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+
+        // Telefon formatı düzenleme (opsiyonel)
+        const telefonInput = document.getElementById('telefon');
+        telefonInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 11) value = value.slice(0, 11);
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
