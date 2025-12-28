@@ -107,7 +107,7 @@
 
         .submit-btn:disabled {
             opacity: 0.6;
-            cursor: not-allowed;
+            cursor: not allowed;
             transform: none;
         }
 
@@ -210,7 +210,6 @@
     </div>
 
     <script>
-        // ⚠️ ÖNEMLİ: Buraya N8N Webhook URL'nizi yazın
         const WEBHOOK_URL = 'https://omer35arica.app.n8n.cloud/webhook/836b3333-4c43-48a8-acd6-6862b28a1976';
 
         const form = document.getElementById('emergencyForm');
@@ -229,13 +228,6 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Webhook URL kontrolü
-            if (!WEBHOOK_URL || WEBHOOK_URL === 'BURAYA_N8N_WEBHOOK_URLINIZI_YAPIŞTIRIN') {
-                showAlert('❌ Webhook URL tanımlanmamış! Lütfen sistem yöneticisiyle iletişime geçin.', 'error');
-                return;
-            }
-
-            // Form verilerini topla
             const formData = {
                 durumTipi: document.getElementById('durumTipi').value,
                 konum: document.getElementById('konum').value,
@@ -246,7 +238,6 @@
                 timestamp: new Date().toISOString()
             };
 
-            // Submit butonunu devre dışı bırak
             const submitBtn = form.querySelector('.submit-btn');
             const originalText = submitBtn.textContent;
             submitBtn.disabled = true;
@@ -265,18 +256,17 @@
                     showAlert('✅ Acil durum bildirimi başarıyla gönderildi! İlgili ekipler bilgilendirildi.', 'success');
                     form.reset();
                 } else {
-                    throw new Error('Sunucu hatası');
+                    throw new Error('Sunucu hatası: ' + response.status);
                 }
             } catch (error) {
                 showAlert('❌ Bildirim gönderilemedi. Lütfen tekrar deneyin veya doğrudan 112\'yi arayın!', 'error');
-                console.error('Hata:', error);
+                console.error('Hata detayı:', error);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
             }
         });
 
-        // Telefon formatı düzenleme (opsiyonel)
         const telefonInput = document.getElementById('telefon');
         telefonInput.addEventListener('input', (e) => {
             let value = e.target.value.replace(/\D/g, '');
