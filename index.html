@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acil Durum Bildirim Sistemi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,67 +16,129 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d0a0a 50%, #1a1a1a 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
         }
 
         .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 500px;
+            background: linear-gradient(145deg, #1f1f1f 0%, #2a2a2a 100%);
+            border-radius: 25px;
+            box-shadow: 0 25px 70px rgba(220, 38, 38, 0.4),
+                        0 0 100px rgba(0, 0, 0, 0.8) inset;
+            max-width: 550px;
             width: 100%;
-            padding: 40px;
+            padding: 45px;
+            border: 2px solid rgba(220, 38, 38, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                #dc2626 20%, 
+                #ef4444 50%, 
+                #dc2626 80%, 
+                transparent 100%);
+            border-radius: 25px 25px 0 0;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         h1 {
-            color: #333;
+            font-family: 'Bebas Neue', cursive;
+            color: #ffffff;
             margin-bottom: 10px;
-            font-size: 28px;
+            font-size: 42px;
             text-align: center;
+            text-shadow: 0 0 20px rgba(220, 38, 38, 0.8),
+                         0 0 40px rgba(220, 38, 38, 0.4);
+            font-weight: 400;
+            letter-spacing: 3px;
         }
 
         .subtitle {
-            color: #666;
-            margin-bottom: 30px;
+            color: #b0b0b0;
+            margin-bottom: 35px;
             font-size: 14px;
             text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         label {
+            font-family: 'Bebas Neue', cursive;
             display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-            font-size: 14px;
+            margin-bottom: 10px;
+            color: #e0e0e0;
+            font-weight: 400;
+            font-size: 18px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
         }
 
         label .required {
-            color: #f44336;
+            color: #ef4444;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
+            padding: 14px 16px;
+            background: rgba(40, 40, 40, 0.8);
+            border: 2px solid rgba(220, 38, 38, 0.3);
+            border-radius: 12px;
             font-size: 14px;
             transition: all 0.3s;
             font-family: inherit;
+            color: #ffffff;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #808080;
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #dc2626;
+            background: rgba(50, 50, 50, 0.9);
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.2),
+                        0 0 20px rgba(220, 38, 38, 0.3);
         }
 
         textarea {
@@ -83,47 +148,63 @@
 
         select {
             cursor: pointer;
-            background: white;
+        }
+
+        select option {
+            background: #2a2a2a;
+            color: #ffffff;
         }
 
         .submit-btn {
+            font-family: 'Bebas Neue', cursive;
             width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 18px;
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
             color: white;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 12px;
+            font-size: 22px;
+            font-weight: 400;
             cursor: pointer;
             transition: all 0.3s;
-            margin-top: 10px;
+            margin-top: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4),
+                        0 0 30px rgba(220, 38, 38, 0.2) inset;
+            letter-spacing: 2px;
         }
 
         .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(220, 38, 38, 0.6),
+                        0 0 40px rgba(220, 38, 38, 0.3) inset;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
         }
 
         .submit-btn:disabled {
             opacity: 0.6;
-            cursor: not allowed;
+            cursor: not-allowed;
             transform: none;
         }
 
         .alert {
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 25px;
             display: none;
-            animation: slideIn 0.3s ease;
+            animation: slideIn 0.4s ease;
             text-align: center;
+            font-weight: 600;
         }
 
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: translateY(-15px);
             }
             to {
                 opacity: 1;
@@ -132,32 +213,146 @@
         }
 
         .alert.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: rgba(22, 163, 74, 0.2);
+            color: #86efac;
+            border: 2px solid rgba(34, 197, 94, 0.5);
             display: block;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
         }
 
         .alert.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: rgba(220, 38, 38, 0.2);
+            color: #fca5a5;
+            border: 2px solid rgba(239, 68, 68, 0.5);
             display: block;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
         }
 
         .emergency-icon {
-            font-size: 48px;
+            font-size: 56px;
             text-align: center;
             margin-bottom: 20px;
+            animation: emergencyPulse 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(220, 38, 38, 0.8));
+        }
+
+        @keyframes emergencyPulse {
+            0%, 100% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 15px rgba(220, 38, 38, 0.8));
+            }
+            50% {
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 25px rgba(220, 38, 38, 1));
+            }
+        }
+
+        /* Telegram Contact Box Styles */
+        .telegram-box {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 18px;
+            padding: 25px;
+            margin-top: 35px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 136, 204, 0.3),
+                        0 0 50px rgba(30, 41, 59, 0.5) inset;
+            border: 2px solid rgba(14, 165, 233, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .telegram-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(14, 165, 233, 0.1), 
+                transparent);
+            animation: telegramShimmer 3s infinite;
+        }
+
+        @keyframes telegramShimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .telegram-box h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 26px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 15px rgba(14, 165, 233, 0.6);
+            letter-spacing: 2px;
+        }
+
+        .telegram-box p {
+            font-size: 15px;
+            opacity: 0.95;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            color: #cbd5e1;
+        }
+
+        .telegram-btn {
+            font-family: 'Bebas Neue', cursive;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 20px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4),
+                        0 0 20px rgba(14, 165, 233, 0.2) inset;
+            letter-spacing: 1.5px;
+        }
+
+        .telegram-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(14, 165, 233, 0.6),
+                        0 0 30px rgba(14, 165, 233, 0.3) inset;
+            background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+        }
+
+        .telegram-btn:active {
+            transform: translateY(-1px) scale(1.01);
+        }
+
+        .telegram-icon {
+            font-size: 22px;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
         }
 
         @media (max-width: 600px) {
             .container {
-                padding: 30px 20px;
+                padding: 35px 25px;
             }
 
             h1 {
-                font-size: 24px;
+                font-size: 26px;
+            }
+
+            .emergency-icon {
+                font-size: 48px;
             }
         }
     </style>
@@ -207,6 +402,16 @@
 
             <button type="submit" class="submit-btn">🚨 ACİL DURUM BİLDİR</button>
         </form>
+
+        <!-- Telegram İletişim Bölümü -->
+        <div class="telegram-box">
+            <h3><span class="telegram-icon">📱</span> Alternatif Bildirim Yöntemi</h3>
+            <p>Acil durumları Telegram botumuz üzerinden de bildirebilirsiniz!</p>
+            <a href="https://t.me/acil_durum_bot" target="_blank" class="telegram-btn">
+                <span class="telegram-icon">✈️</span>
+                Telegram'dan Hızlıca Bildirin
+            </a>
+        </div>
     </div>
 
     <script>
