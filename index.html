@@ -247,108 +247,13 @@
             }
         }
 
-        /* Telegram Contact Box Styles */
-        .telegram-box {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border-radius: 18px;
-            padding: 25px;
-            margin-top: 35px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0, 136, 204, 0.3),
-                        0 0 50px rgba(30, 41, 59, 0.5) inset;
-            border: 2px solid rgba(14, 165, 233, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .telegram-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(14, 165, 233, 0.1), 
-                transparent);
-            animation: telegramShimmer 3s infinite;
-        }
-
-        @keyframes telegramShimmer {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .telegram-box h3 {
-            font-family: 'Bebas Neue', cursive;
-            font-size: 26px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 0 15px rgba(14, 165, 233, 0.6);
-            letter-spacing: 2px;
-        }
-
-        .telegram-box p {
-            font-size: 15px;
-            opacity: 0.95;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-            color: #cbd5e1;
-        }
-
-        .telegram-btn {
-            font-family: 'Bebas Neue', cursive;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-            padding: 14px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 400;
-            font-size: 20px;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4),
-                        0 0 20px rgba(14, 165, 233, 0.2) inset;
-            letter-spacing: 1.5px;
-        }
-
-        .telegram-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 12px 30px rgba(14, 165, 233, 0.6),
-                        0 0 30px rgba(14, 165, 233, 0.3) inset;
-            background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
-        }
-
-        .telegram-btn:active {
-            transform: translateY(-1px) scale(1.01);
-        }
-
-        .telegram-icon {
-            font-size: 22px;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
-        }
-
         @media (max-width: 600px) {
             .container {
                 padding: 35px 25px;
             }
 
             h1 {
-                font-size: 26px;
+                font-size: 32px;
             }
 
             .emergency-icon {
@@ -360,7 +265,7 @@
 <body>
     <div class="container">
         <div class="emergency-icon">🚨</div>
-        <h1>Acil Durum Bildirim</h1>
+        <h1>ACİL DURUM BİLDİRİM</h1>
         <p class="subtitle">Yangın, deprem ve diğer acil durumları hızlıca bildirin</p>
 
         <div id="alertBox" class="alert"></div>
@@ -402,20 +307,10 @@
 
             <button type="submit" class="submit-btn">🚨 ACİL DURUM BİLDİR</button>
         </form>
-
-        <!-- Telegram İletişim Bölümü -->
-        <div class="telegram-box">
-            <h3><span class="telegram-icon">📱</span> Alternatif Bildirim Yöntemi</h3>
-            <p>Acil durumları Telegram botumuz üzerinden de bildirebilirsiniz!</p>
-            <a href="https://t.me/acil_durum_bot" target="_blank" class="telegram-btn">
-                <span class="telegram-icon">✈️</span>
-                Telegram'dan Hızlıca Bildirin
-            </a>
-        </div>
     </div>
 
     <script>
-        const WEBHOOK_URL = 'https://erkyanki.app.n8n.cloud/webhook/web-site-acil-durum';
+        const WEBHOOK_URL = 'https://erkyanki.app.n8n.cloud/webhook-test/web-site-acil-durum';
 
         const form = document.getElementById('emergencyForm');
         const alertBox = document.getElementById('alertBox');
